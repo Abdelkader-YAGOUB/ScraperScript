@@ -22,7 +22,7 @@ inputMaRc = input("Enter laptop mark : ")  # Input mark -- toshiba
 # URL webscrape 
 url = 'https://www.ouedkniss.com/annonces/index.php?c=informatique&sc=ordinateur-portable&photo=1&marque='+ inputMaRc +'&p='
 
-csv_columns = ['idProduct','Name','Price','Mark','RAM','CPU','Graphic','Screen','DiscCapacity','State','Adress','Phone','URL']
+csv_columns = ['idProduct','Name','Price','Mark','RAM','CPU','Screen','DiscCapacity','State','Adress','Phone','URL']
 
 # range(1) -> 1 page
 for page in range(1):
@@ -34,7 +34,8 @@ for page in range(1):
     i=0
     writer.writeheader()
     for pt in ancher:
-        idProduct = pt.find('span', {'class' : 'annonce_numero'})
+        idProduct = pt.find('span', {'class' : 'annonce_numero'}).text
+        print(idProduct)
         urlProduct = pt.find('a', {'class' : 'button button_details'})
 
         # link details 
@@ -43,92 +44,92 @@ for page in range(1):
         soup2 = BeautifulSoup(d.content, "html.parser")
         ancher2 =soup2.find_all('div',{'id' : 'annonce'})
         for pt2 in ancher2:
-            name = pt2.find('h1', {'itemprop' : 'name'})
-            price = pt2.find('span', {'itemprop' : 'price'})
-            print(name.text)
-            if price is not None:
-                print(BeginRED + "" + price.text + "" + EndRED)
-            mark_p = pt2.find('p', {'id' : 'Marque'})
-            mark_class = mark_p.find('span', {'class' : 'description_span'})
-            print(mark_class.text)
+            name = pt2.find('h1', {'itemprop' : 'name'}).text
+            print(name)
 
-            try:
+            if pt2.find('span', {'itemprop' : 'price'}):
+                price = pt2.find('span', {'itemprop' : 'price'}).text
+                print(price)
+            else:
+                print(BeginRED + "None value" + EndRED)
+
+            if pt2.find('p', {'id' : 'Marque'}):
+                mark_p = pt2.find('p', {'id' : 'Marque'})
+                mark_class = mark_p.find('span', {'class' : 'description_span'}).text
+                print(mark_class)
+            else:
+                print(BeginRED + "None value" + EndRED)
+
+            if pt2.find('p', {'id' : 'RAM'}):
                 RAM_p = pt2.find('p', {'id' : 'RAM'})
-                RAM_class = RAM_p.find('span', {'class' : 'description_span'})
-                if RAM_class is not None:
-                    print(RAM_class.text)
-            except:
-                RAM_class = "None value"
-            
-            try:
+                RAM_class = RAM_p.find('span', {'class' : 'description_span'}).text
+                print(RAM_class)
+            else:
+                print(BeginRED + "None value" + EndRED)
+
+            if pt2.find('p', {'id' : 'RAM'}):
+                RAM_p = pt2.find('p', {'id' : 'RAM'})
+                RAM_class = RAM_p.find('span', {'class' : 'description_span'}).text
+                print(RAM_class)
+            else:
+                print(BeginRED + "None value" + EndRED)    
+
+            if pt2.find('p', {'id' : 'Processeur'}):
                 processeur_p = pt2.find('p', {'id' : 'Processeur'})
-                processeur_class = processeur_p.find('span', {'class' : 'description_span'})
-                if processeur_class is not None:
-                    print(processeur_class.text)
-            except:
-                processeur_class = "None value"
-
-            try:
+                processeur_class = processeur_p.find('span', {'class' : 'description_span'}).text
+                print(processeur_class)
+            else:
+                print(BeginRED + "None value" + EndRED)
+            
+            if pt2.find('p', {'id' : 'Dimensions écran'}):
                 dimensionScreen_p = pt2.find('p', {'id' : 'Dimensions écran'})
-                dimensionScreen_class = dimensionScreen_p.find('span', {'class' : 'description_span'})
-                if dimensionScreen_class is not None:
-                    print(dimensionScreen_class.text)
-            except:
-                dimensionScreen_class = "None value"
+                dimensionScreen_class = dimensionScreen_p.find('span', {'class' : 'description_span'}).text
+                print(dimensionScreen_class)
+            else:
+                print(BeginRED + "None value" + EndRED)
 
-            try:
+            if pt2.find('p', {'id' : 'Disque'}):
                 disque_p = pt2.find('p', {'id' : 'Disque'})
-                disque_class = disque_p.find('span', {'class' : 'description_span'})
-                if disque_class is not None:
-                    print(disque_class.text)
-            except:
-                disque_class = "None value"
+                disque_class = disque_p.find('span', {'class' : 'description_span'}).text
+                print(disque_class)
+            else:
+                print(BeginRED + "None value" + EndRED)
 
-            try:
-                graphic = pt2.find('p', {'class' : 'description_span'})
-                if graphic is not None:
-                    print(graphic.text)
-            except:
-                graphic = "None value"
-
-            try:
+            if pt2.find('p', {'id' : 'Etat'}):
                 state_p = pt2.find('p', {'id' : 'Etat'})
-                state_class = state_p.find('span', {'class' : 'description_span'})
-                if state_class is not None:
-                    print(state_class.text)
-            except:
-                state_class = "None value"
+                state_class = state_p.find('span', {'class' : 'description_span'}).text
+                print(state_class)
+            else:
+                print(BeginRED + "None value" + EndRED)
 
-            try:
+            if pt2.find('div', {'id' : 'Annonceur'}):
                 adress_p = pt2.find('div', {'id' : 'Annonceur'})
-                adress_class = adress_p.find('p', {'class' : 'Adresse'})
-                if adress_class is not None:
-                    print(adress_class.text)
-            except:
-                adress_class = "None value"
+                adress_class = adress_p.find('p', {'class' : 'Adresse'}).text
+                print(adress_class)
+            else:
+                print(BeginRED + "None value" + EndRED)
 
-            try:
+            if pt2.find('div', {'id' : 'Annonceur'}):
                 phone_p = pt2.find('div', {'id' : 'Annonceur'})
                 phone_p1 = phone_p.find('p', {'id' : 'direct_call'})
-                phone_class = phone_p1.find('a')
-                if phone_class is not None:
-                    print(phone_class.text)
-            except:
-                phone_class = "None value"
+                phone_class = phone_p1.find('a').text
+                print(phone_class)
+            else:
+                print(BeginRED + "None value" + EndRED)
+
 
             # Add data to CSV file
-            writer.writerow({'idProduct': idProduct.text,
-                            'Name': name.text,
-                            'Price': price.text,
-                            'Mark': mark_class.text,
-                            'RAM': RAM_class.text,
-                            'CPU': processeur_class.text,
-                            'Graphic': graphic,
-                            'Screen': dimensionScreen_class.text,
-                            'DiscCapacity': disque_class.text,
-                            'State': state_class.text,
-                            'Adress': adress_class.text,
-                            'Phone': phone_class.text,
+            writer.writerow({'idProduct': idProduct,
+                            'Name': name,
+                            'Price': price,
+                            'Mark': mark_class,
+                            'RAM': RAM_class,
+                            'CPU': processeur_class,
+                            'Screen': dimensionScreen_class,
+                            'DiscCapacity': disque_class,
+                            'State': state_class,
+                            'Adress': adress_class,
+                            'Phone': phone_class,
                             'URL': urlDetails})
         print("--------------")
 
